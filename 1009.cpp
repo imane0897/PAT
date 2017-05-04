@@ -11,38 +11,17 @@ struct poly {
     double coe;
 } ;
 
-poly a[15], b[15], c[100];
-int flag = -1;
-
-void refresh_c(int expo, double coe) {
-    for (int i = 0; i < 100; i++) {
-        if (c[i].expo == expo) {
-            c[i].coe += coe;
-            return;
-        }
-    }
-    c[++flag].expo = expo;
-    c[flag].coe = coe;
-}
-
-bool mysortfunc(const poly a, const poly b) {
-    if (a.expo > b.expo) {
-        return true;
-    }
-    return false;
-}
+poly a[15], b[15];
 
 
 int main(void) {
     int k1, k2, i, j;
+    double c[2010] = {0};
 
     // init
     for (i = 0; i < 15; i++) {
         a[i].expo = 0; a[i].coe = 0;
         b[i].expo = 0; b[i].coe = 0;
-    }
-    for (i = 0; i < 100; i++) {
-        c[i].expo = 0; c[i].coe = 0;
     }
     //////
 
@@ -63,23 +42,23 @@ int main(void) {
         for (j = 0; j < k2; j++) {
             expo = a[i].expo + b[j].expo;
             coe = a[i].coe * b[j].coe;
-            refresh_c(expo, coe);
+            c[expo] += coe;
         }
     }
 
     int count = 0;
-    for (i = 0; i < 100; i++) {
-        if (abs(c[i].coe) > 0.005) {
+    for (i = 0; i < 2010; i++) {
+        if (abs(c[i]) != 0) {
             count++;
         }
     }
-    std::sort(c, c+100, mysortfunc);
+    // std::sort(c, c+100, mysortfunc);
 
     // output
     printf("%d", count);
-    for (i = 0; i < 100; i++) {
-        if (abs(c[i].coe) > 0.005) {
-            printf(" %d %.1lf", c[i].expo, c[i].coe);
+    for (i = 2010 - 1; i >= 0; i--) {
+        if (abs(c[i]) != 0) {
+            printf(" %d %.1lf", i, c[i]);
         }
     }
     printf("\n");
