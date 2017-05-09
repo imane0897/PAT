@@ -4,69 +4,54 @@
 #include <algorithm>
 using namespace std;
 
-const int MAXN = 10010;
+const int MAXN = 100010;
 
 bool cmp(int i, int j) {return i > j;}
 
 int main(void) {
-    int n1, n2, nc[MAXN], np[MAXN];
+    int n1, n2, nc_pos[MAXN], nc_neg[MAXN], np_pos[MAXN], np_neg[MAXN];
     int money = 0;
-    int i;
+    int i, t;
 
-    memset(nc, 0, MAXN);
-    memset(np, 0, MAXN);
+    memset(nc_pos, 0, MAXN);
+    memset(np_pos, 0, MAXN);
+    memset(np_neg, 0, MAXN);
+    memset(np_neg, 0, MAXN);
 
     scanf("%d", &n1);
+    int nc_p = 0, nc_q = 0;
     for (i = 0; i < n1; i++) {
-        scanf("%d", &nc[i]);
+        scanf("%d", &t);
+        if (t > 0) {
+            nc_pos[nc_p++] = t;
+        } else if (t < 0) {
+            nc_neg[nc_q++] = t;
+        }
     }
     scanf("%d", &n2);
+    int np_p = 0, np_q = 0;
     for (i = 0; i < n2; i++) {
-        scanf("%d", &np[i]);
-    }
-
-    sort(nc, nc + n1, cmp);
-    sort(np, np + n2, cmp);
-
-    int bonus = -1;
-    if (n1 == n2) {
-        for (i = 0; i < n1; i++) {
-            bonus = nc[i] * np[i];
-            if (bonus > 0) {
-                money += bonus;
-            }
-        }
-    } else if (n1 > n2) {
-        for (i = 0; i < n2; i++) {
-            bonus = nc[i] * np[i];
-            if (bonus > 0) {
-                money += bonus;
-            }
-        }
-        for (i = n2; i < n1; i++){
-            if (0<= i - (n1 - n2) && i - (n1 - n2) < n2) {
-                bonus = nc[i] * np[i - (n1 - n2)];
-                if (bonus > 0) {
-                    money += bonus;
-                }
-            }
-        }
-    } else if (n2 > n1) {
-        for (i = 0; i < n1; i++) {
-            bonus = nc[i] * np[i];
-            if (bonus > 0) {
-                money += bonus;
-            }
-        }
-        for (i = n1; i < n2; i++){
-            if (0 <= i - (n2 - n1) && i - (n2 - n1) < n1) {
-                bonus = nc[i - (n2 - n1)] * np[i];
-                if (bonus > 0) {
-                    money += bonus;
-                }
-            }
+        scanf("%d", &t);
+        if (t > 0) {
+            np_pos[np_p++] = t;
+        } else if (t < 0) {
+            np_neg[np_q++] = t;
         }
     }
+
+    sort(nc_pos, nc_pos + nc_p, cmp);
+    sort(nc_neg, nc_neg + nc_q);
+    sort(np_pos, np_pos + np_p, cmp);
+    sort(np_neg, np_neg + np_q);
+
+    money = 0;
+    for (i = 0; i < nc_p && i < np_p; i++) {
+        money += nc_pos[i] * np_pos[i];
+    }
+    for (i = 0; i < nc_q && i < np_q; i++) {
+        money += nc_neg[i] * np_neg[i];
+    }
+
     printf("%d\n", money);
     return 0;
 }
