@@ -16,6 +16,15 @@ Operations
 
   +, +=, +" ..."
 
+- reverse
+
+  ```cpp
+  #include <algorithm>
+  std::reverse(mystring.begin(), mystring.end());
+  ```
+
+  ​
+
 
 
 These functions are defined in `cctype` header.
@@ -116,4 +125,17 @@ int main () {
 #include <cstring>
 memset(array_name, value, size);
 ```
+
+
+
+# Palindromic Number
+
+字符串存储数字，利用 C++ 的 reverse 进行反转，用字符串相等判断是否为回文数。
+
+```cpp
+#include <algorithm>
+std::reverse(mystring.begin(), mystring.end());
+```
+
+reverse 的操作对象是 BidirectionalIterator
 
