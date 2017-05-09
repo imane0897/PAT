@@ -139,3 +139,10 @@ std::reverse(mystring.begin(), mystring.end());
 
 reverse 的操作对象是 BidirectionalIterator
 
+
+
+# 超时的可能原因
+
+1. 死循环
+2. 调用函数造成过大开销。可以通过传实参的方法进行优化。
+3. 遍历累加。利用好原点。(PAT 1046)

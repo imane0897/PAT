@@ -62,7 +62,6 @@ int main(void) {
     }
     //////
 
-    // std::cout << "a_coe = " << a_coe << ",a_coe.size = " << a_coe.size() << '\n';
     while (a_coe.size() < n) {
         a_coe += "0";
     }
