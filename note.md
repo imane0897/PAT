@@ -146,3 +146,76 @@ reverse 的操作对象是 BidirectionalIterator
 1. 死循环
 2. 调用函数造成过大开销。可以通过传实参的方法进行优化。
 3. 遍历累加。利用好原点。(PAT 1046)
+
+
+
+# vector
+
+
+
+| Operations         | Explanations                             |
+| ------------------ | ---------------------------------------- |
+| v.empty()          | Returns true if v is empty               |
+| v.size()           | Returns the number of elements in v      |
+| v.push_back(t)     | Adds an element with value t to end of v |
+| v[n]               | Returns a reference to the element at position in v |
+| v1 = v2            | Replaces the elements in v1 with a copy of the elements in v2 |
+| v1 = {a, b, c ...} | Replaces the elements in v1 with a copy of the elements in the comma-separated list. |
+| v1 == v2           | v1 and v2 are equal if they have the same number of elements and each element in v1 is equal to the corresonding element in v2 |
+| v1 != v2           |                                          |
+| <, <=, >, >=       | Have their normal meanings using dictionary ordering. |
+
+ 
+
+# dictionary order rule
+
+1. If two strings have different lengths and if every character in the shorter string is equal to the corresponding character of the longer string, then the shorter string is less than the longer one.
+2. If any characters at corresponding positions in the two strings differ, then the result of the string comparison is the result of comparing the first character at which the strings differ.
+
+```cpp
+string str = "Hello"; 
+string phrase = "Hello World"; 
+string slang = "Hiya";
+
+// Using rule 1, we see that str is less than phrase. By applying rule 2, we see that slang is greater than both str and phrase.
+```
+
+
+
+# iterator
+
+Ways to initialize a `vector`
+
+```cpp
+vector<T> v1;
+vector<T> v2(v1);
+vector<T> v2 = v1;
+vector<T> v3(n, val);
+vector<T> v4(n);
+vector<T> v5{a, b, c};
+vector<T> v5 = {a, b, c ...};
+```
+
+
+
+| Operations     | Explanations                             |
+| -------------- | ---------------------------------------- |
+| *iter          | Returns a reference to the element denoted by the iterator iter. |
+| iter->mem      | Dereferences iter and fetches the member named mem from the underlying element. Equivalent to (*iter).mem. |
+| ++iter         | Increments iter to refer to the next element in the container. |
+| —iter          | Decrements iter to refer to the previous elements in the container. |
+| iter1 == iter2 | Compares two iterators for equality(inequality). Two iterators are equal if they denote the same element or if they are the off-the-end iterator for the same container. |
+| iter1 != iter2 |                                          |
+
+
+
+# 关于指针
+
+```cpp
+string s = "some strings";
+if (s.begin() != s.end()) {
+	auto it = s.begin();
+    *it = toupper(*it);
+}
+```
+
