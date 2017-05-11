@@ -10,8 +10,6 @@ int main(void) {
     string a;
     cin >> a;
 
-    count = 0;
-
     for (i = 0; i < a.size(); i++) {
         a[i] = a[i] - '0';
     }
