@@ -4,9 +4,23 @@
 Operations
 
 - empty( )    bool
+
 - size( )         unsigned int
 
----
+- substr()
+
+  ```cpp
+  #include <iostream>
+  #include <string>
+  std::string str = "We think in generalities, but we live in detials.";
+  std::string str2 = str.subtr(3, 5); // "think"
+  std::size_t pos = str.find("live"); // position of "live" in str
+  std::string str3 = str.substr(pos); // get from "live" to the end, "think live in details."
+
+  ```
+
+  ​
+
 
 - compare strings
 
@@ -22,8 +36,6 @@ Operations
   #include <algorithm>
   std::reverse(mystring.begin(), mystring.end());
   ```
-
-  ​
 
 
 

@@ -1,4 +1,4 @@
-FILE = 1049
+FILE = demo
 
 all: clean
 
