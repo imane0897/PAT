@@ -103,7 +103,7 @@ s = std::to_string(i)
 
 
 
-# sort
+# sortatom
 
 ```cpp
 #include <iostream>     // std::cout
