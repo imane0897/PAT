@@ -103,7 +103,7 @@ s = std::to_string(i)
 
 
 
-# sortatom
+# sort
 
 ```cpp
 #include <iostream>     // std::cout
@@ -231,3 +231,15 @@ if (s.begin() != s.end()) {
 }
 ```
 
+
+
+# C++ Queue
+
+| Function | Explaination        |
+| -------- | ------------------- |
+| empty    |                     |
+| size     |                     |
+| front    | Access next element |
+| back     | Access last element |
+| push     | push back           |
+| pop      | pop front           |

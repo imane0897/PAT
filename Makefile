@@ -1,9 +1,9 @@
-FILE = 1015
+FILE = demo
 
 all: clean
 
 build:
-	g++ $(FILE).cpp -o $(FILE).out
+	g++ -std=c++11 $(FILE).cpp -o $(FILE).out
 
 run: build
 	./$(FILE).out < INPUT

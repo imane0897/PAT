@@ -1,14 +1,13 @@
 #include <iostream>
 #include <cstdio>
 #include <cmath>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-bool is_prime(int a) {
-    if (a == 1) {
-        return false;
-    }
-    for (int i = 2; i <= sqrt(a); i++) {
-        if (a % i == 0) {
+bool queue_empty (vector<int> v[], int size) {
+    for (int i = 0; i < size; i++) {
+        if (!v[i].empty()) {
             return false;
         }
     }
@@ -16,8 +15,13 @@ bool is_prime(int a) {
 }
 
 int main(void) {
-    int a;
-    cin >> a;
-    cout << is_prime(a) << endl;
+
+    vector<int> v[5];
+    v[1].push_back(2);
+    for(int i = 0; i < 5; i++) {
+        if (!v[i].empty()) {
+            cout << v[i].front() << endl;
+        }
+    }
     return 0;
 }
