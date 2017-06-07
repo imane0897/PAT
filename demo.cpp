@@ -2,6 +2,8 @@
 #include <cstdio>
 #include <cmath>
 #include <vector>
+#include <cstring>
+#include <cstdlib>
 #include <algorithm>
 using namespace std;
 
@@ -15,13 +17,14 @@ bool queue_empty (vector<int> v[], int size) {
 }
 
 int main(void) {
-
-    vector<int> v[5];
-    v[1].push_back(2);
-    for(int i = 0; i < 5; i++) {
-        if (!v[i].empty()) {
-            cout << v[i].front() << endl;
-        }
+    int n = 10;
+    for (int p = 1; p <= 10; p++) {
+        printf("%d ", (p + 1 + n -1) % n + 1);
     }
+    printf("\n");
+    for (int p = 1; p <= 10; p++) {
+        printf("%d ", (p + 1 + n) % n);
+    }
+    printf("\n");
     return 0;
 }
