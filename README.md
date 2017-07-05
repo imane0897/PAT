@@ -2,11 +2,14 @@
 
 [TOC]
 
+## 题目注记
+
 * 1022
 
   重点在于字符串的读入
   * getline(cin, line)
   * keywords 的按 word 读入
+
 * 1052
 
    https://www.sigmainfy.com/blog/pat-1052-linked-list-soring.html
@@ -14,9 +17,11 @@
    注意
    * 虽然 n  正整数，但是链表可能为空，即头结点为 NULL
    * memory中的全部结点并不一定属于同一个链表
+
 * 1054
 
    hash
+
 * 1039
 
    由于 MAXN 和 MAXM 都比较大，内存不够，需要用vector
@@ -25,6 +30,7 @@
 
    由于 name 是格式固定的字符串，映射成 int 类型时可以采用“进制”的思想。
    e.g. $ABC1 -> (((A*26)+B)*26+C)*26+1$
+
 * 1042
 
    copy char array
@@ -40,6 +46,10 @@ strcpy(a, b)
 memset(a, b, sizeof(a))
 ```
 ​	can be used when a, b are 2D arrays or strings
+
+- 1025
+
+  规定了 ID 的长度是 13 个字符，但是可以是 0 开头。如果是用 long long int 读进来，需要注意输出的时候保持 13 个字符。如果是用 string 就不会有这个问题了。
 
 ## 笔记
 
@@ -293,7 +303,7 @@ int main(void) {
 #include <iostream>
 using namespace std;
 
-void swap(int& a, int& b) {
+void swap2(int& a, int& b) {
   int t = a; a = b; b = t; 
 }
 int main(void) {
@@ -314,3 +324,54 @@ int main(void) {
 | back     | Access last element |
 | push     | push back           |
 | pop      | pop front           |
+
+
+
+### struct
+
+```cpp
+#include <iostream>
+using namespace std;
+
+struct Point {
+  int x, y;
+  Point(int x, int y):x(x), y(y) {}
+} ;
+
+Point operator + (const Point &A, const Point &B) {
+  
+}
+```
+
+
+
+
+
+### 二叉树
+
+```cpp
+struct Node{
+  int val;
+  Node *left, *right;
+  Node():left(NULL), right(NULL){}
+} ;
+```
+
+
+
+## 一些代码片段
+
+1. 素数判定
+
+   ```cpp
+   int is_prime(int n) {
+     if (n <= 1)  return 0;
+     int m = floor(sqrt(n) + 0.5);
+     for (int i = 2; i <= m; i++) {
+       if (n % i == 0)  return 0;
+     }
+     return 1;
+   }
+   ```
+
+   ​
