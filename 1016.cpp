@@ -24,6 +24,9 @@ struct customer {
         }
     }
 } ;
+// bool operator <(const customer a, const customer b) {
+//     return std::tie(a.name, a.mo, a.dd, a.hh, a.mm) < std::tie(b.name, b.mo, b.dd, b.hh, b.mm);
+// }
 
 int toll[24];
 
@@ -96,22 +99,24 @@ int main() {
             }
             v.erase(v.begin());
         }
-        cout << c.name;
-        printf(" %02d\n", c.mo);
-        int sz = cus.size();
-        sz = sz & 1 ? sz - 1 : sz;
-        for (int i = 0; i < sz; i+=2) {
-            start  = cus[i];
-            stop = cus[i+1];
-            printf("%02d:%02d:%02d ", start.dd, start.hh, start.mm);
-            printf("%02d:%02d:%02d ", stop.dd, stop.hh, stop.mm);
-            int time_m = minus_time(stop, start);
-            printf("%d ", time_m);
-            int m = add_money(start, stop, time_m);
-            printf("$%d.%02d\n", m/100, m%100);
-            total_amount += m;
+        if (cus.size() > 1) {
+            cout << c.name;
+            printf(" %02d\n", c.mo);
+            int sz = cus.size();
+            sz = sz & 1 ? sz - 1 : sz;
+            for (int i = 0; i < sz; i+=2) {
+                start  = cus[i];
+                stop = cus[i+1];
+                printf("%02d:%02d:%02d ", start.dd, start.hh, start.mm);
+                printf("%02d:%02d:%02d ", stop.dd, stop.hh, stop.mm);
+                int time_m = minus_time(stop, start);
+                printf("%d ", time_m);
+                int m = add_money(start, stop, time_m);
+                printf("$%d.%02d\n", m/100, m%100);
+                total_amount += m;
+            }
+            printf("Total amount: $%d.%02d\n", total_amount/100, total_amount%100);
         }
-        printf("Total amount: $%d.%02d\n", total_amount/100, total_amount%100);
     }
     return 0;
 }
