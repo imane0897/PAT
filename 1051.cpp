@@ -1,46 +1,46 @@
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
+#include <cstdlib>
+#include <vector>
 using namespace std;
 
-int main(void) {
-    int m, n, k;
-    int a[1010], i;
-    bool flag;
+bool check_legal_sequence(const int& m, const int& n, const int pop[]) {
+    int stack_max = 0;
+    vector <int> stack;
 
-    scanf("%d%d%d", &m, &n, &k);
-    while (k--) {
-        flag = true;
-        for (i = 0; i < n; i++) {
-            scanf("%d", &a[i]);
-        }
-        
-        for (i = 0; i < n - m; i++) {
-            if (a[i] > m + i) {
-                flag = false;
-                break;
-            } else if (a[i] > m) {
-
+    stack.push_back(0);
+    for (int p = 0; p < n; p++) {
+        if (stack.back() < pop[p]) {
+            if (m - (int)stack.size() + 1 < pop[p] - stack_max) {
+                return false;
             }
-        }
-        if (flag) {
-            int b[1010] = {0};
-            for (i = 0; i < n; i++) {
-                b[a[i]] = 1;
-                int index = a[i + 1];
-                if (index < n && b[index+1] == 0) {
-                    for (int j = index + 2; j <= n; j++) {
-                        if (b[j]) {
-                            flag = false;
-                            break;
-                        }
-                    }
-                }
-                if (!flag)    break;
+            for (int i = stack_max + 1; i < pop[p]; i++) {
+                stack.push_back(i);
             }
+            stack_max = pop[p];
+        } else if (stack.back() == pop[p]) {
+            stack.pop_back();
+        } else if (stack.back() > pop[p]) {
+            return false;
         }
-
-        if (flag)   printf("YES\n");
-        else        printf("NO\n");
     }
+    return true;
+}
+
+int main() {
+    int m, n, k, pop[1010];
+    scanf("%d %d %d", &m, &n, &k);
+
+    while (k--) {
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &pop[i]);
+        }
+        if (check_legal_sequence(m, n, pop)) {
+            cout << "YES" << endl;
+        } else {
+            cout << "NO" << endl;
+        }
+    }
+
     return 0;
 }
