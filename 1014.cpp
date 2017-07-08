@@ -1,71 +1,57 @@
 #include <iostream>
+#include <cstdlib>
 #include <cstdio>
-#include <queue>
-#include <cstring>
+#include <vector>
 using namespace std;
 
-const int END_TIME = 540;
-const int MAX_QUE = 25;
-const int MAX = 0xffff;
+const int MAX = 0xfffff;
 
-queue <int> windows[MAX_QUE];
-int a[1010], b[1010];
+struct window {
+    int cur_time;
+    vector<int> v;
+    window() {
+        this->cur_time = 0;
+    }
+} ;
 
-int main(void){
-    int n, m, num_people, num_query;
-
-    memset(a, -1, sizeof(a));
-    memset(b, -1, sizeof(b));
-
-    scanf("%d%d%d%d", &n, &m, &num_people, &num_query);
-    for (int i = 0; i < num_people; i++) {
-        scanf("%d", &a[i]);
+int main() {
+    int N, M, K, Q, cus_begin[1010], cus_end[1010] = {0};
+    window windows[20];
+    scanf("%d %d %d %d", &N, &M, &K, &Q);
+    for (int i = 0; i < K; i++) {
+        scanf("%d", &cus_begin[i]);
     }
 
-    int t_count = 0, p_count = 0, k = 0, latest_time = END_TIME;
-    while (t_count < latest_time) {
-
-        while (p_count < m * n && k < num_people && t_count < END_TIME) {
-            int min_ind = -1, min = m;
-            for (int i = 0; i < n; i++) {
-                if (windows[i].size() < min) {
-                    min_ind = i;
-                    min = windows[i].size();
-                }
-            }
-            windows[min_ind].push(k++);
-            p_count++;
-        }
-
-        int min_t = MAX;
-        for (int i = 0; i < n; i++) {
-            if (!windows[i].empty() && a[windows[i].front()] < min_t) {
-                min_t = a[windows[i].front()];
+    int ptr = 0;
+    for (int i = 0; i < N*M && i < K; i++) {
+        windows[i%N].v.push_back(ptr++);
+    }
+    while (true) {
+        int shortest = MAX, index = -1;
+        for (int i = 0; i < N; i++) {
+            if (windows[i].cur_time < 540 && !windows[i].v.empty() &&
+            (windows[i].cur_time + cus_begin[windows[i].v.front()] < shortest)) {
+                shortest = windows[i].cur_time + cus_begin[windows[i].v.front()];
+                index = i;
             }
         }
-        t_count += min_t;
-        for (int i = 0; i < n; i++) {
-            if (!windows[i].empty()) {
-                a[windows[i].front()] -= min_t;
-                if (a[windows[i].front()] == 0) {
-                    b[windows[i].front()] = t_count;
-                    windows[i].pop();
-                    p_count--;
-                }
-                if (t_count < END_TIME && t_count + a[windows[i].front()] > latest_time) {
-                    latest_time = t_count + a[windows[i].front()];
-                }
-            }
+
+        if (index >= 0) {
+            windows[index].cur_time += cus_begin[windows[index].v.front()];
+            cus_end[windows[index].v.front()] = windows[index].cur_time;
+            windows[index].v.erase(windows[index].v.begin());
+            if (ptr < K)  windows[index].v.push_back(ptr++);
+        } else {
+            break;
         }
     }
-    // printf("latest_time = %d\n", latest_time);
-    // output
-    int index;
-    for (int i = 0; i < num_query; i++) {
-        scanf("%d", &index);
-        index -= 1;
-        if (b[index] > -1) {
-            printf("%02d:%02d\n", 8 + b[index] / 60, b[index] % 60);
+
+    int q;
+    for (int i = 0; i < Q; i++) {
+        scanf("%d", &q);
+        q -= 1;
+        if (cus_end[q] > 0) {
+            printf("%02d:%02d\n", cus_end[q] / 60 + 8, cus_end[q] % 60);
         } else {
             printf("Sorry\n");
         }
