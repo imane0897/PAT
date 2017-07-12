@@ -51,6 +51,14 @@ memset(a, b, sizeof(a))
 
   规定了 ID 的长度是 13 个字符，但是可以是 0 开头。如果是用 long long int 读进来，需要注意输出的时候保持 13 个字符。如果是用 string 就不会有这个问题了。
 
+- 1007
+
+  http://blog.csdn.net/wuhuagu_wuhuaguo/article/details/70186606
+
+  这篇博文给出了分治及动态规划算法。
+
+  ​
+
 ## 笔记
 
 ### C++ String
@@ -111,7 +119,7 @@ These functions are defined in `cctype` header.
 ### C++ Array
 
 ```cpp
-// Note to add header file 
+// Note to add header file
 #include <array>
 std::array<int, 5> myarray;
 // entire array is initialized to 0
@@ -156,7 +164,17 @@ s = std::to_string(i)
 
 
 
+### convert string to int
+
+```cpp
+i = std::stoi(s, nullptr, 10);
+```
+
+
+
 ### sort
+
+- vector + sort
 
 ```cpp
 #include <iostream>     // std::cout
@@ -175,10 +193,40 @@ int main () {
   //(12 32 45 71)26 80 53 33
 
   // using function as comp
-  std::sort (myvector.begin()+4, myvector.end(), myfunction); 
+  std::sort (myvector.begin()+4, myvector.end(), myfunction);
   // 12 32 45 71(26 33 53 80)
- 
+
   return 0;
+}
+```
+
+- struct + operator<
+
+1. 在  strcut 内部 override <
+
+```cpp
+struct MyStruct {
+    A a;
+    B b;
+    C c;
+    bool operator<(const MyStruct& rhs) const {
+        if (a != rhs.a) {
+          return a < rhs.a;
+        } else if (b != rhs.b) {
+          return b < rhs.b;
+        } else {
+          return c < rhs.c;
+        }
+    }
+};
+
+```
+
+2. 用 std::tie 在 struct 外部 override <
+
+```cpp
+bool operator <(const MyStruct& x, const MyStruct& y) {
+    return std::tie(x.a, x.b, x.c) < std::tie(y.a, y.b, y.c);
 }
 ```
 
@@ -230,7 +278,7 @@ reverse 的操作对象是 BidirectionalIterator
 | v1 != v2           |                                          |
 | <, <=, >, >=       | Have their normal meanings using dictionary ordering. |
 
- 
+
 
 ### dictionary order rule
 
@@ -238,8 +286,8 @@ reverse 的操作对象是 BidirectionalIterator
 2. If any characters at corresponding positions in the two strings differ, then the result of the string comparison is the result of comparing the first character at which the strings differ.
 
 ```cpp
-string str = "Hello"; 
-string phrase = "Hello World"; 
+string str = "Hello";
+string phrase = "Hello World";
 string slang = "Hiya";
 
 // Using rule 1, we see that str is less than phrase. By applying rule 2, we see that slang is greater than both str and phrase.
@@ -304,7 +352,7 @@ int main(void) {
 using namespace std;
 
 void swap2(int& a, int& b) {
-  int t = a; a = b; b = t; 
+  int t = a; a = b; b = t;
 }
 int main(void) {
   int a = 3, b = 4;
@@ -339,7 +387,7 @@ struct Point {
 } ;
 
 Point operator + (const Point &A, const Point &B) {
-  
+
 }
 ```
 
@@ -373,5 +421,3 @@ struct Node{
      return 1;
    }
    ```
-
-   ​
