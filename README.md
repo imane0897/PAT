@@ -393,8 +393,6 @@ Point operator + (const Point &A, const Point &B) {
 
 
 
-
-
 ### 二叉树
 
 ```cpp
@@ -403,6 +401,19 @@ struct Node{
   Node *left, *right;
   Node():left(NULL), right(NULL){}
 } ;
+```
+
+
+
+### fill
+
+```cpp
+#include <algorithm>
+
+// iterator
+fill (myvector.begin(), myvecotr.end(), 0);
+// 2-d array
+fill (a[0], a[0] + MAXN * MAXN, 0);
 ```
 
 

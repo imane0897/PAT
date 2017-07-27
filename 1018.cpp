@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstdio>
-#include <cstdlib>
+#include <algorithm>
 using namespace std;
 
 const int INF = 0x3f3f3f3f;
@@ -8,17 +8,16 @@ const int MAXN = 501;
 int cost[MAXN][MAXN];
 int lowcost[MAXN];
 bool vis[MAXN];
-int num[MAXN];
-int w[MAXN];
+int send[MAXN];
+int take[MAXN];
+int pre[MAXN];
 int v[MAXN];
 
 void Dijkstra(int n, int beg) {
-    for (int i = 0; i < n; i++) {
-        lowcost[i] = INF;  vis[i] = false;
+    for (int i = 0; i < n ; i++) {
+        lowcost[i] = INF;  vis[i] = false;  pre[i] = -1;
     }
     lowcost[beg] = 0;
-    num[beg] = 1;
-    w[beg] = v[beg];
     for (int j = 0; j < n; j++) {
         int k = -1;
         int Min = INF;
@@ -33,36 +32,26 @@ void Dijkstra(int n, int beg) {
         for (int i = 0; i < n; i++) {
             if (!vis[i] && lowcost[k] + cost[k][i] < lowcost[i]) {
                 lowcost[i] = lowcost[k] + cost[k][i];
-                num[i] = num[k];
-                w[i] = v[i] + w[k];
+                pre[i] = k;
             } else if (!vis[i] && lowcost[k] + cost[k][i] == lowcost[i]) {
-                if (v[i] + w[k] > w[i]) {
-                    w[i] = v[i] + w[k];
-                    lowcost[i] = lowcost[k] + cost[k][i];
-                }
-                num[i] += num[k];
+
             }
         }
     }
 }
 
 int main() {
-    int N, M, C1, C2, i, j, l;
-    scanf("%d %d %d %d", &N, &M, &C1, &C2);
-    for (i = 0; i < N; i++) {
+    int Cmax, N, Sp, M;
+    fill(cost[0], cost[0] + MAXN * MAXN, INF);
+    scanf("%d %d %d %d", &Cmax, &N, &Sp, &M);
+    for (int i = 0; i < N; i++) {
         scanf("%d", &v[i]);
     }
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            cost[i][j] = INF;
-        }
+    int Si, Sj, l;
+    for (int i = 0; i < M; i++) {
+        scanf("%d %d %d", &Si, &Sj, &l);
+        cost[Si][Sj] = l;  cost[Sj][Si] = l;
     }
-    for (int k = 0; k < M; k++) {
-        scanf("%d %d %d", &i, &j, &l);
-        cost[i][j] = l;  cost[j][i] = l;
-    }
-    Dijkstra(N, C1);
-
-    printf("%d %d\n", num[C2], w[C2]);
+    Dijkstra(N, Sp);
     return 0;
 }

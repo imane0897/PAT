@@ -1,58 +1,59 @@
-#include <iostream>
-#include <stdio.h>
+#include <cstdio>
+#include <vector>
+#include <queue>
 #include <algorithm>
 using namespace std;
 
-const int MAXN = 105;
+vector<int> v[100];
+int book[100];
+int maxlevel = 0;
 
-
-int main(void) {
-    int N, M, i;
-    int level[MAXN];
-    int index[MAXN];
-    int count[MAXN];
-    bool flag[MAXN];
-
-    for(i = 0; i < MAXN; i++) {
-        level[i] = 0;
-        flag[i] = true;
-        index[i] = i;
-        count[i] = 0;
+void dfs(int node, int level) {
+    if (v[node].empty()) {
+        book[level]++;
+        maxlevel = max(level, maxlevel);
+        return ;
     }
-    level[1] = 1;
+    for (size_t i = 0; i < v[node].size(); i++) {
+        dfs(v[node][i], level + 1);
+    }
+}
 
-    scanf("%d%d", &N, &M);
-    int id, k, k_id;
-    for (i = 0; i < M; i++) {
-        scanf("%d%d", &id, &k);
-        flag[id] = false;
-        for (int j = 0; j < k; j++) {
-            scanf("%d", &k_id);
-            if (level[id] <= 0) {
-                continue;
-            } else {
-            level[k_id] = level[id] + 1;
-            }
+void bfs() {
+    int level[100];
+    queue<int> q;
+    q.push(1);
+    level[1] = 0;
+    while (!q.empty()) {
+        int index = q.front();
+        maxlevel = max(level[index], maxlevel);
+        q.pop();
+        if (v[index].size() == 0) {
+            book[level[index]]++;
+        }
+        for (size_t i = 0; i < v[index].size(); i++) {
+            q.push(v[index][i]);
+            level[v[index][i]] = level[index] + 1;
+        }
+    }
+}
+
+int main() {
+    int N, M, node, child, k;
+    scanf("%d %d", &N, &M);
+    while (M--) {
+        scanf("%d %d", &node, &k);
+        while (k--) {
+            scanf("%d", &child);
+            v[node].push_back(child);
         }
     }
 
-    for (i = 1; i <= N; i++) {
-        if (flag[i]) {
-            count[level[i]] += 1;
-        }
+    // dfs(1, 0);
+    bfs();
+    for (int i = 0; i < maxlevel; i++) {
+        printf("%d ", book[i]);
     }
-
-    int sum = 0;
-    for (i = 1; i <= N; i++) {
-        printf("%d", count[i]);
-        sum += count[i];
-        if (sum != N - M) {
-            printf(" ");
-        } else {
-            break;
-        }
-    }
-    printf("\n");
-
+    printf("%d\n", book[maxlevel]);
     return 0;
 }
