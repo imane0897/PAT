@@ -11,7 +11,7 @@ struct people {
     bool operator< (const people& rhs) const {
         if (worth != rhs.worth) {
             return worth > rhs.worth;
-        } else if (age != rhs.worth) {
+        } else if (age != rhs.age) {
             return age < rhs.age;
         } else {
             return strcmp(name, rhs.name) < 0;
@@ -28,7 +28,9 @@ int main() {
         scanf("%s%d%d", temp.name, &temp.age, &temp.worth);
         v.push_back(temp);
     }
+
     sort(v.begin(), v.end());
+
     for (int i = 1; i <= K; i++) {
         scanf("%d%d%d", &M, &Amin, &Amax);
         int count = 0;
